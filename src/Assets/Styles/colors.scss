@@ -1,0 +1,33 @@
+$PRIMARY: #121212;
+$SECONDARY: #ffffff;
+$PURPLE:#5521b4;
+$GREY:#d2d2d2;
+$DARK_PURPLE:#1E1F4B;
+$GREY_BG: #f4f4f4;
+$LIGHT_BEIGE:#f4f2ed;
+$SILVER: rgba(192,192,192,0.85);
+$DARK_GREY: #8a8a8a;
+$BEIGE: #f4f2ee; // rgb(244,242,238)
+
+.text-black {
+  color: $PRIMARY;
+}
+.text-white {
+  color: $SECONDARY;
+}
+.text-app-purple{
+  color: $PURPLE;
+}
+.text-dark-purple{
+  color: $DARK_PURPLE;
+}
+.text-silver{
+  color: $SILVER;
+}
+.text-app-dark-grey{
+  color: $DARK_GREY;
+}
+
+.text-app-grey{
+  color: $GREY;
+}

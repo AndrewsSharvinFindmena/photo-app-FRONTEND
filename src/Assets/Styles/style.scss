@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+
+body {
+  min-height: 100vh;
+  background: var(--color-background);
+  transition:
+          color 0.5s,
+          background-color 0.5s;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+
+  -webkit-appearance: none;
+  width: 5px;
+  background-color: transparent;
+
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: $GREY;
+
+}
+.wrapper{
+  min-height: 100vh;
+}
+
+@media screen and (max-width: $MOB_SCREEN) {
+  .wrapper{
+    padding: 0px 16px;
+  }
+}
+
+@media screen and (min-width: $TAB_MIN_SCREEN) and (max-width: $TAB_MAX_SCREEN) {
+  .wrapper{
+    padding: 0px 32px;
+  }
+}
+
+@media screen and (min-width: $DESKTOP_SCREEN) {
+  .wrapper{
+    padding: 0px 42px;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  .wrapper {
+    padding: 0px calc((100vw - $BIG_SCREEN_SIZE) / 2);
+  }
+}
+
