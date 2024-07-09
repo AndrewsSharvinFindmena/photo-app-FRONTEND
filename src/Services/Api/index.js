@@ -7,6 +7,8 @@ const clientApi = axios.create({
 const unAuthorizedLinks=[
     "/signIn","/signUp"
 ]
+
+const formDataLinks =["/imgUpload/update","/imgUpload"]
 clientApi.interceptors.request.use(
     (config) => {
         if(!unAuthorizedLinks.includes(config.url)){
@@ -14,13 +16,11 @@ clientApi.interceptors.request.use(
                 config.headers['Authorization'] = `Bearer ${store.getToken()}`
                 config.headers['email'] = user?.email
         }
-
-        if( config.url !== "/imgUpload"){
-            config.headers['Content-Type'] = `application/json`
-        }else{
+        if(formDataLinks.includes(config.url)){
             config.headers['Content-Type'] = `multipart/form-data`
+        }else{
+            config.headers['Content-Type'] = `application/json`
         }
-
         return config
     },
     (error) => {
@@ -68,6 +68,14 @@ export function imgUpload(value) {
 
 export function editUser(value) {
     return post('/editUser', value)
+}
+
+export function deleteEntry(value) {
+    return post('/deleteEntry', value)
+}
+
+export function editEntry(value) {
+    return post('/imgUpload/update', value)
 }
 
 
