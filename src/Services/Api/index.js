@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { store } from '@/Store/index.js'
+import {tr} from "vuetify/locale";
 const clientApi = axios.create({
     baseURL: import.meta.env.VITE_BACKEND,
 })
@@ -38,10 +39,16 @@ clientApi.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
+        console.log("the incoming error",[originalRequest , error])
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            originalRequest.headers['Authorization'] = `Bearer ${store.getRefreshToken()}`;
+            await store.runRefreshToken()
+            originalRequest.headers['Authorization'] = `Bearer ${store.getToken()}`;
+            // console.log("trying again with refresh token", store.getRefreshToken())
             return clientApi(originalRequest);
+        }
+        if (error.response.status === 401 && originalRequest._retry) {
+            store.unAuthorized = true
         }
         return Promise.reject(error)
     }

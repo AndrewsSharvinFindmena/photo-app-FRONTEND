@@ -1,6 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="container" >
+            <v-btn @click="logout" color="red" prepend-icon="mdi-logout" >Sign out</v-btn>
             <div class="top-section" >
                 <AppImagePicker @getData="getData"/>
             </div>
@@ -29,7 +30,15 @@ export default {
                 getUserImages().then((response)=>{
                     console.log("response", response)
                     this.list = response?.data
+                }).catch((err)=>{
+                    if(err.code === 400){
+                        this.$router.push(ROUTES.ADMIN)
+                    }
                 })
+        },
+        logout(){
+            store.logout()
+            this.$router.push(ROUTES.SIGNIN)
         }
     },
     beforeMount() {
@@ -59,6 +68,9 @@ export default {
 }
 
 @media screen and (max-width: $MOB_SCREEN) {
+    .top-section{
+        margin-top: 16px;
+    }
     .top-section, .image-view-section{
         padding: 32px 24px;
     }
@@ -67,6 +79,9 @@ export default {
     }
 }
 @media screen and (min-width: $TAB_MIN_SCREEN) {
+    .top-section{
+        margin-top: 32px;
+    }
     .top-section, .image-view-section{
         padding: 46px 32px;
     }

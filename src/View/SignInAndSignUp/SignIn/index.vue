@@ -61,8 +61,14 @@ export default {
                 store.setUser({email:data?.email})
                 store.setToken(data?.accessToken)
                 store.setRefreshToken(data?.refreshToken)
+                if(data?.isAdmin){
+                    this.$router.push(ROUTES.ADMIN)
+                }else{
+                    this.$router.push(ROUTES.HOME)
+                }
+                store.unAuthorized = false
                 this.$emit("handleLoading",false)
-                this.$router.push(ROUTES.HOME)
+
             }).catch((err)=>{
                 this.$emit("handleLoading",false)
                 this.errorMessage = err?.msg
