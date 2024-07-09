@@ -1,20 +1,18 @@
 import axios from 'axios'
-// import { store } from '@/store/store.js'
+import { store } from '@/Store/index.js'
 const clientApi = axios.create({
-    // baseURL: process.env.NODE_ENV === "development" ? "http://139.162.25.181/api" : "https://api.wildwolf.vip/api",
     baseURL: import.meta.env.VITE_BACKEND,
 })
-let loading = null
-const options = {
-    lock: true,
-    text: 'Loading'
-    // background: 'rgba(0, 0, 0, 0.7)',
-}
+const unAuthorizedLinks=[
+    "/signIn","/signUp"
+]
 clientApi.interceptors.request.use(
     (config) => {
-        // const user= store.getUser()
-        //     config.headers['Authorization'] = user?.authorization
-            config.headers['email'] =  "andrews@gmail.com" //user?.email
+        if(!unAuthorizedLinks.includes(config.url)){
+            const user= store.getUser()
+                config.headers['Authorization'] = `Bearer ${store.getToken()}`
+                config.headers['email'] = user?.email
+        }
 
         if( config.url !== "/imgUpload"){
             config.headers['Content-Type'] = `application/json`
@@ -28,10 +26,9 @@ clientApi.interceptors.request.use(
         return Promise.reject(error)
     }
 )
-clientApi.defaults.timeout = 10000
+clientApi.defaults.timeout = 4000
 clientApi.interceptors.response.use(
     (response) => {
-        // loading.close()
         const code = response.data.code
         if (code == 200) {
             return response.data
@@ -39,20 +36,32 @@ clientApi.interceptors.response.use(
             return Promise.reject(response.data || 'request error')
         }
     },
-    (error) => {
+    async (error) => {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            originalRequest.headers['Authorization'] = `Bearer ${store.getRefreshToken()}`;
+            return clientApi(originalRequest);
+        }
         return Promise.reject(error)
     }
 )
 
 
-export function signin(value) {
-    return post('/signin', value)
+export function signIn(value) {
+    return post('/signIn', value)
 }
-export function createUser(value) {
-    return post('/createUser', value)
+
+export function signUp(value) {
+    return post('/signUp', value)
 }
 export function imgUpload(value) {
     return post('/imgUpload', value)
+}
+
+
+export function getUserImages(value) {
+    return get('/getUserImages', value)
 }
 
 

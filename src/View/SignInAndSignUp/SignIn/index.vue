@@ -1,6 +1,7 @@
 <template>
     <div class="signin-form">
         <h1 class="text-dark-purple">Sign In</h1>
+        <p class="error-message text-red" >{{errorMessage}}</p>
         <div>
             <v-text-field variant="underlined"
                           v-model="form.email"
@@ -14,11 +15,7 @@
                 @click:append-inner="show1 = !show1"
                 v-on:keyup.enter="handleSubmit"
                 v-model="form.password" label="Password" variant="underlined"></v-text-field>
-            <v-checkbox
-                    color="primary"
-                    label="Keep me signed in"
-            ></v-checkbox>
-            <v-btn width="100%" color="primary">Sign In</v-btn>
+            <v-btn class="submit-btn" @click="handleSubmit" width="100%" color="primary">Sign In</v-btn>
         </div>
         <div class="links">
             <router-link :to="ROUTES.SIGNUP">
@@ -30,6 +27,8 @@
 
 <script>
 import {ROUTES} from "@/Constants/routes.js";
+import {signIn} from "@/Services/Api/index.js";
+import {store} from "@/Store/index.js";
 
 export default {
     name: "SignIn",
@@ -41,13 +40,33 @@ export default {
                 email: null,
                 password: null
             },
-            errrorMessage:null,
-            keepSignedIn: false
+            errorMessage:null,
         }
     },
     methods:{
         handleSubmit(){
-
+            this.errorMessage =""
+            console.log("pressed enter",this.form)
+            if(!this.form.email){
+                this.errorMessage = "Email ID is required"
+                return
+            }
+            if(!this.form.password){
+                this.errorMessage = "Enter password"
+                return
+            }
+            this.$emit("handleLoading",true)
+            console.log("opening or sending request")
+            signIn(this.form).then(({data})=>{
+                store.setUser({email:data?.email})
+                store.setToken(data?.accessToken)
+                store.setRefreshToken(data?.refreshToken)
+                this.$emit("handleLoading",false)
+                this.$router.push(ROUTES.HOME)
+            }).catch((err)=>{
+                this.$emit("handleLoading",false)
+                this.errorMessage = err?.msg
+            })
         }
     }
 }
@@ -57,10 +76,16 @@ export default {
 h1 {
   margin-bottom: 24px;
 }
+.submit-btn{
+    margin-top: 16px;
+}
 .links{
     margin-top: 24px;
     a{
         color: $PURPLE;
     }
+}
+.error-message{
+    margin-bottom: 12px;
 }
 </style>

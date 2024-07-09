@@ -2,8 +2,8 @@
     <div class="wrapper" >
         <div class="container" >
             <div class="form-wrapper" >
-               <SignIn v-if="isSignInPage"/>
-                <SignUp v-else />
+               <SignIn @handleLoading="(data)=>loading=data"  v-if="isSignInPage"/>
+                <SignUp @handleLoading="(data)=>loading=data" v-else />
                 <AppLoadingOverlay v-if="loading" />
             </div>
         </div>
