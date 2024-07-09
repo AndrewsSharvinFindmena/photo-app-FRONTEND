@@ -9,7 +9,9 @@
                     accept="image/*"
                 />
                 <label class="upload-label" for="upload-photo">
-                    <p class="medium-16 text-dark-purple" >{{imageUrl ? "Change Image" :"Choose Image"}}</p>
+                    <div class="label-holder">
+                        <p class="medium-16 text-dark-purple" >{{imageUrl ? "Change Image" :"Choose Image"}}</p>
+                    </div>
                 </label>
             </div>
             <div class="img-preview" v-if="imageUrl">
@@ -106,7 +108,13 @@ export default {
   position: absolute;
 }
 .upload-label{
+
  cursor: pointer;
+}
+.label-holder{
+    border: 1px solid $SILVER;
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 @media screen and (max-width: $MOB_SCREEN) {
     .image-picker{

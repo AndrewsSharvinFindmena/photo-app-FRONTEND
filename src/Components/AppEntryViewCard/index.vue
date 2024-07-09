@@ -136,7 +136,8 @@ export default {
 .view-card {
   background-color: $BEIGE;
   position: relative;
-
+    display: flex;
+    flex-flow: column;
 }
 
 #edit-photo {
@@ -146,6 +147,9 @@ export default {
 
 .image-area {
   overflow: clip;
+    display: flex;
+    height: 100%;
+    align-items: center;
 
   img {
     width: 100%;

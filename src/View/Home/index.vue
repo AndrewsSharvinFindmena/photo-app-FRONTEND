@@ -6,7 +6,7 @@
                 <AppImagePicker @getData="getData"/>
             </div>
             <div class="image-view-section" >
-                <AppEntryViewCard @getData="getData" v-if="list.length > 0" v-for="(item,index) in list" :key="index" :data="item"></AppEntryViewCard>
+                <AppEntryViewCard @getData="getData" v-if="list.length > 0" v-for="(item,index) in [...list,...list,...list,...list,...list,...list,...list,...list,...list,...list]" :key="index" :data="item"></AppEntryViewCard>
                 <p v-else class="text-black medium-16" >No Entries Found.</p>
             </div>
         </div>
