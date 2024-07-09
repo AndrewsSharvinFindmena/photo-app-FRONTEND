@@ -118,6 +118,7 @@ export default {
     }
     .title-input-box{
         width: 100%;
+        margin-bottom: 24px;
     }
     .right-side{
         width: 100%;

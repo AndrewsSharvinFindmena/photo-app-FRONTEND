@@ -7,8 +7,10 @@
                           v-model="form.email"
                           name="email"
                           label="Email"
+                          class="input-area"
             ></v-text-field>
             <v-text-field
+                class="input-area"
                 :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
                 @click:append-inner="show1 = !show1"
@@ -79,6 +81,9 @@ h1 {
 }
 .submit-btn{
     margin-top: 16px;
+}
+.input-area{
+    margin-bottom: 26px;
 }
 .links{
     margin-top: 24px;

@@ -6,9 +6,11 @@
             <v-text-field variant="underlined"
                           v-model="form.email"
                           label="Email"
+                          class="input-area"
                           name="email"
             ></v-text-field>
             <v-text-field
+                class="input-area"
                 name="password"
                 :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
@@ -93,5 +95,8 @@ h1 {
 }
 .error-message{
     margin-bottom: 12px;
+}
+.input-area{
+    margin-bottom: 26px;
 }
 </style>

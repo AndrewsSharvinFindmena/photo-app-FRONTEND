@@ -66,9 +66,17 @@ export function imgUpload(value) {
     return post('/imgUpload', value)
 }
 
+export function editUser(value) {
+    return post('/editUser', value)
+}
+
 
 export function getUserImages(value) {
     return get('/getUserImages', value)
+}
+
+export function getUserInfo(value) {
+    return get('/getUserInfo', value)
 }
 
 

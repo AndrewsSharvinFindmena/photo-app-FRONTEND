@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="container" >
-            <v-btn @click="logout" color="red" prepend-icon="mdi-logout" >Sign out</v-btn>
+            <AppSignOutButton/>
             <div class="top-section" >
                 <AppImagePicker @getData="getData"/>
             </div>
@@ -36,10 +36,7 @@ export default {
                     }
                 })
         },
-        logout(){
-            store.logout()
-            this.$router.push(ROUTES.SIGNIN)
-        }
+
     },
     beforeMount() {
         const user = store.getUser()

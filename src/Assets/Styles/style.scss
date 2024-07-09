@@ -34,7 +34,9 @@ body {
 .wrapper{
   min-height: 100vh;
 }
-
+.v-input__details{
+  display: none !important;
+}
 @media screen and (max-width: $MOB_SCREEN) {
   .wrapper{
     padding: 0px 16px;

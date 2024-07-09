@@ -1,9 +1,10 @@
 <template>
     <div class="wrapper">
         <div class="container" >
-            <v-btn @click="logout" color="red" prepend-icon="mdi-logout" >Sign out</v-btn>
+            <AppSignOutButton/>
             <div class="list-viewer" >
-
+                <AppUserInfo @handleChange="getData" v-if="list.length >= 1" v-for="(item, index) in list" :data="item":key="index" />
+                <p v-else class="text-black" >No Users</p>
             </div>
         </div>
     </div>
@@ -12,6 +13,7 @@
 <script>
 import {ROUTES} from "@/Constants/routes.js";
 import {store} from "@/Store/index.js";
+import {getUserInfo} from "@/Services/Api/index.js";
 
 export default {
     name:"Admin",
@@ -22,19 +24,15 @@ export default {
     },
     methods:{
         getData(){
-            // getUserImages().then((response)=>{
-            //     console.log("response", response)
-            //     this.list = response?.data
-            // }).catch((err)=>{
-            //     if(err.code === 400){
-            //         this.$router.push(ROUTES.ADMIN)
-            //     }
-            // })
+            console.log("getting data")
+            getUserInfo().then((response)=>{
+                this.list = response?.data
+            }).catch((err)=>{
+                if(err.code === 400){
+                    this.$router.push(ROUTES.HOME)
+                }
+            })
         },
-        logout(){
-            store.logout()
-            this.$router.push(ROUTES.SIGNIN)
-        }
     },
     beforeMount() {
         const user = store.getUser()
@@ -51,5 +49,9 @@ export default {
 <style lang="scss" scoped>
 .container{
     padding-top: 50px;
+
+}
+.list-viewer{
+    margin-top: 32px;
 }
 </style>

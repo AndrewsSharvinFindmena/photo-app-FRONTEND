@@ -9,7 +9,7 @@
         </div>
         <div class="action-btns" >
             <v-btn v-if="data?.isEditEnabled" icon="mdi-pencil" size="x-small" color="primary" ></v-btn>
-            <v-btn v-if="data?.isDeleteEnabled" icon="mdi-delete" size="x-small" color="primary" ></v-btn>
+            <v-btn v-if="data?.isDeleteEnabled" icon="mdi-delete" size="x-small" color="red" ></v-btn>
         </div>
     </div>
 </template>
