@@ -65,6 +65,7 @@ export default {
             signUp(this.form).then((response)=>{
                 this.$emit("handleLoading",false)
                 console.log("response")
+                alert("Successfully created account!")
             }).catch((err)=>{
                 this.$emit("handleLoading",false)
                 this.errorMessage = err?.msg
